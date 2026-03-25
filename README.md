@@ -1,5 +1,7 @@
 # Pella DevOps Technical Challenge - Azure Infrastructure with Terraform
 
+<img width="1562" height="822" alt="pella_azure_architecture drawio" src="https://github.com/user-attachments/assets/a64448ff-9a88-460e-a31b-800d2f07292c" />
+
 ## Overview
 
 This repository provisions Azure infrastructure using Terraform with a reusable and maintainable Infrastructure as Code structure.
@@ -135,4 +137,3 @@ Azure Subscription
     │   └── Subnet: app (10.20.2.0/24)
     └── Storage Account + Private Blob Container
 
-<img width="1562" height="822" alt="pella_azure_architecture drawio" src="https://github.com/user-attachments/assets/c9d523e9-9657-41f4-b89f-20b6be6856ac" />
