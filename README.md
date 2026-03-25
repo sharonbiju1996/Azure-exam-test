@@ -135,4 +135,4 @@ Azure Subscription
     │   └── Subnet: app (10.20.2.0/24)
     └── Storage Account + Private Blob Container
 
-<img width="1562" height="822" alt="pella_azure_architecture drawio" src="https://github.com/user-attachments/assets/c2db825d-8e16-4d89-af48-ffb7220962aa" />
+<img width="1562" height="822" alt="pella_azure_architecture drawio" src="https://github.com/user-attachments/assets/c9d523e9-9657-41f4-b89f-20b6be6856ac" />
