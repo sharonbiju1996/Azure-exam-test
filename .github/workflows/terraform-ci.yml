@@ -3,6 +3,9 @@ name: terraform-ci
 on:
   pull_request:
     branches: [ main ]
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   plan-dev:
@@ -12,13 +15,15 @@ jobs:
         working-directory: environments/dev
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: hashicorp/setup-terraform@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.8.5
 
-      - name: Azure login
+      - name: Azure Login
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -26,20 +31,58 @@ jobs:
       - name: Terraform Init
         run: terraform init -backend-config=backend.hcl
 
-      - name: Terraform Fmt
+      - name: Terraform Format Check
         run: terraform fmt -check -recursive ../..
 
       - name: Terraform Validate
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -var-file=terraform.tfvars -out=tfplan
 
-      - name: Terraform Show
+      - name: Export Plan
         run: terraform show -no-color tfplan > plan.txt
 
-      - name: Upload plan
+      - name: Upload Plan
         uses: actions/upload-artifact@v4
         with:
           name: dev-plan
           path: environments/dev/plan.txt
+
+  plan-prod:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: environments/prod
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.5
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Terraform Init
+        run: terraform init -backend-config=backend.hcl
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -var-file=terraform.tfvars -out=tfplan
+
+      - name: Export Plan
+        run: terraform show -no-color tfplan > plan.txt
+
+      - name: Upload Plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: prod-plan
+          path: environments/prod/plan.txt
