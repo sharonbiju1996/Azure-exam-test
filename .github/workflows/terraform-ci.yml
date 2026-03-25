@@ -41,13 +41,13 @@ jobs:
         run: terraform plan -var-file=terraform.tfvars -out=tfplan
 
       - name: Export Plan
-        run: terraform show -no-color tfplan > plan.txt
+        run: terraform show -no-color tfplan > plan1.txt
 
       - name: Upload Plan
         uses: actions/upload-artifact@v4
         with:
           name: dev-plan
-          path: environments/dev/plan.txt
+          path: environments/dev/plan1.txt
 
   plan-prod:
     runs-on: ubuntu-latest
@@ -79,10 +79,10 @@ jobs:
         run: terraform plan -var-file=terraform.tfvars -out=tfplan
 
       - name: Export Plan
-        run: terraform show -no-color tfplan > plan.txt
+        run: terraform show -no-color tfplan > plan1.txt
 
       - name: Upload Plan
         uses: actions/upload-artifact@v4
         with:
           name: prod-plan
-          path: environments/prod/plan.txt
+          path: environments/prod/plan1.txt
