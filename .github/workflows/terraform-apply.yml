@@ -12,12 +12,19 @@ on:
           - prod
 
 jobs:
-  apply:
+  apply-dev:
+    name: Apply Dev
+    if: ${{ github.event.inputs.environment == 'dev' }}
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: environments/${{ github.event.inputs.environment }}
-
+        working-directory: environments/dev
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      TF_VAR_admin_ssh_public_key: ${{ secrets.TF_VAR_admin_ssh_public_key }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,13 +34,43 @@ jobs:
         with:
           terraform_version: 1.8.5
 
-      - name: Azure Login
-        uses: azure/login@v2
+      - name: Terraform Init
+        run: terraform init -backend-config=backend.hcl
+
+      - name: Terraform Plan
+        run: terraform plan -var-file=terraform.tfvars -out=tfplan
+
+      - name: Terraform Apply
+        run: terraform apply tfplan            # replays the reviewed plan
+
+  apply-prod:
+    name: Apply Prod
+    if: ${{ github.event.inputs.environment == 'prod' }}
+    runs-on: ubuntu-latest
+    environment: production                    # requires approval in GitHub Environments
+    defaults:
+      run:
+        working-directory: environments/prod
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      TF_VAR_admin_ssh_public_key: ${{ secrets.TF_VAR_admin_ssh_public_key }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          terraform_version: 1.8.5
 
       - name: Terraform Init
         run: terraform init -backend-config=backend.hcl
 
+      - name: Terraform Plan
+        run: terraform plan -var-file=terraform.tfvars -out=tfplan
+
       - name: Terraform Apply
-        run: terraform apply -var-file=terraform.tfvars -auto-approve
+        run: terraform apply tfplan
