@@ -13,9 +13,7 @@ subnets = {
     address_prefixes = ["10.20.2.0/24"]
   }
 }
-
 admin_username       = "azureuser"
-
 tags = {
   cost_center = "production"
 }
