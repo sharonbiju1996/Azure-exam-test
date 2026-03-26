@@ -1,4 +1,4 @@
-# Pella DevOps Technical Challenge - Azure Infrastructure with Terraform
+# OPella DevOps Technical Challenge - Azure Infrastructure with Terraform
 
 <img width="1562" height="822" alt="pella_azure_architecture drawio" src="https://github.com/user-attachments/assets/a64448ff-9a88-460e-a31b-800d2f07292c" />
 
