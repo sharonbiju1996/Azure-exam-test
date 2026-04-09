@@ -13,6 +13,9 @@ subnets = {
 }
 vm_size = "Standard_B1s"
 admin_username       = "azureuser"
+vm_name                = "vm-pella-dev-eastus"
+public_ip_name         = "pip-pella-dev-eastus-vm"
+network_interface_name = "nic-pella-dev-eastus-vm"
 tags = {
   cost_center = "devops"
 }
