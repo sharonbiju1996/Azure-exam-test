@@ -2,8 +2,8 @@ resource "azurerm_public_ip" "vm" {
   name                = var.public_ip_name
   location            = var.location
   resource_group_name = azurerm_resource_group.this.name
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = var.public_ip_allocation_method
+  sku                 = var.public_ip_sku
   tags                = local.common_tags
 }
 
@@ -14,9 +14,9 @@ resource "azurerm_network_interface" "vm" {
   tags                = local.common_tags
 
   ip_configuration {
-    name                          = "internal"
+    name                          = var.nic_ip_config_name
     subnet_id                     = module.vnet.subnet_ids[var.vm_subnet_key]
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = var.private_ip_allocation_method
     public_ip_address_id          = azurerm_public_ip.vm.id
   }
 }
