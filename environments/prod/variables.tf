@@ -24,6 +24,70 @@ variable "subnets" {
   }))
 }
 
+
+# ---------- VM ----------
+
+variable "vm_size" {
+  description = "VM size"
+  type        = string
+}
+
+variable "disable_password_authentication" {
+  type    = bool
+  default = true
+}
+
+# ---------- NIC ----------
+
+variable "nic_ip_config_name" {
+  type    = string
+  default = "internal"
+}
+
+variable "vm_subnet_key" {
+  type    = string
+  default = "vm"
+}
+
+variable "private_ip_allocation_method" {
+  type    = string
+  default = "Dynamic"
+}
+
+# ---------- DISK ----------
+
+variable "os_disk_caching" {
+  type    = string
+  default = "ReadWrite"
+}
+
+variable "os_disk_storage_account_type" {
+  type    = string
+  default = "Standard_LRS"
+}
+
+# ---------- IMAGE ----------
+
+variable "vm_image_publisher" {
+  type    = string
+  default = "Canonical"
+}
+
+variable "vm_image_offer" {
+  type    = string
+  default = "0001-com-ubuntu-server-jammy"
+}
+
+variable "vm_image_sku" {
+  type    = string
+  default = "22_04-lts"
+}
+
+variable "vm_image_version" {
+  type    = string
+  default = "latest"
+}
+
 variable "admin_username" {
   type = string
 }
