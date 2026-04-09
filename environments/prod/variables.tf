@@ -24,12 +24,23 @@ variable "subnets" {
   }))
 }
 
-
-# ---------- VM ----------
+variable "vm_name" {
+  description = "Name of the VM"
+  type        = string
+}
 
 variable "vm_size" {
-  description = "VM size"
+  description = "Azure VM size"
   type        = string
+}
+
+variable "admin_username" {
+  type = string
+}
+
+variable "admin_ssh_public_key" {
+  type      = string
+  sensitive = true
 }
 
 variable "disable_password_authentication" {
@@ -37,24 +48,25 @@ variable "disable_password_authentication" {
   default = true
 }
 
-# ---------- NIC ----------
+variable "network_interface_name" {
+  type = string
+}
 
-variable "nic_ip_config_name" {
+variable "nic_ip_configuration_name" {
   type    = string
   default = "internal"
 }
 
 variable "vm_subnet_key" {
-  type    = string
-  default = "vm"
+  description = "Subnet key for VM"
+  type        = string
+  default     = "vm"
 }
 
-variable "private_ip_allocation_method" {
+variable "private_ip_address_allocation" {
   type    = string
   default = "Dynamic"
 }
-
-# ---------- DISK ----------
 
 variable "os_disk_caching" {
   type    = string
@@ -65,8 +77,6 @@ variable "os_disk_storage_account_type" {
   type    = string
   default = "Standard_LRS"
 }
-
-# ---------- IMAGE ----------
 
 variable "vm_image_publisher" {
   type    = string
@@ -88,13 +98,37 @@ variable "vm_image_version" {
   default = "latest"
 }
 
-variable "admin_username" {
+variable "bastion_name" {
   type = string
 }
 
-variable "admin_ssh_public_key" {
-  type      = string
-  sensitive = true
+variable "bastion_public_ip_name" {
+  type = string
+}
+
+variable "bastion_public_ip_allocation_method" {
+  type    = string
+  default = "Static"
+}
+
+variable "bastion_public_ip_sku" {
+  type    = string
+  default = "Standard"
+}
+
+variable "bastion_sku" {
+  type    = string
+  default = "Basic"
+}
+
+variable "bastion_ip_configuration_name" {
+  type    = string
+  default = "bastion-ip-config"
+}
+
+variable "bastion_subnet_key" {
+  type    = string
+  default = "AzureBastionSubnet"
 }
 
 variable "tags" {
