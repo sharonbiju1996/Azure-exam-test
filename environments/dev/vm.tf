@@ -25,7 +25,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   name                = "vm-${local.name_prefix}"
   resource_group_name = azurerm_resource_group.this.name
   location            = var.location
-  size                = "Standard_B2ps_v2"
+  size = var.vm_size
   admin_username      = var.admin_username
   network_interface_ids = [
     azurerm_network_interface.vm.id
