@@ -24,6 +24,12 @@ variable "subnets" {
   }))
 }
 
+variable "vm_size" {
+  description = "Azure VM size"
+  type        = string
+  default     = "Standard_B1ms"
+}
+
 variable "admin_username" {
   type = string
 }
