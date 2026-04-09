@@ -34,7 +34,6 @@ variable "vm_name" {
 variable "vm_size" {
   description = "Azure VM size"
   type        = string
-  default     = "Standard_B1ms"
 }
 
 variable "admin_username" {
@@ -93,7 +92,7 @@ variable "vm_image_offer" {
 
 variable "vm_image_sku" {
   type    = string
-  default = "22_04-lts-gen2"
+  default = "22_04-lts"
 }
 
 variable "vm_image_version" {
