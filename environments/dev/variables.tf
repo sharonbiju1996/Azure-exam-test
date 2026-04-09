@@ -106,3 +106,28 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+
+# ---------- PUBLIC IP ----------
+
+variable "public_ip_allocation_method" {
+  type    = string
+  default = "Static"
+}
+
+variable "public_ip_sku" {
+  type    = string
+  default = "Standard"
+}
+
+# ---------- NIC ----------
+
+variable "nic_ip_config_name" {
+  type    = string
+  default = "internal"
+}
+
+variable "private_ip_allocation_method" {
+  type    = string
+  default = "Dynamic"
+}
