@@ -5,9 +5,9 @@ resource "azurerm_network_interface" "vm" {
   tags                = local.common_tags
 
   ip_configuration {
-    name                          = "internal"
-    subnet_id                     = module.vnet.subnet_ids["vm"]
-    private_ip_address_allocation = "Dynamic"
+    name                          = var.nic_ip_config_name
+    subnet_id                     = module.vnet.subnet_ids[var.vm_subnet_key]
+    private_ip_address_allocation = var.private_ip_allocation_method
   }
 }
 
@@ -15,14 +15,14 @@ resource "azurerm_linux_virtual_machine" "vm" {
   name                = "vm-${local.name_prefix}"
   resource_group_name = azurerm_resource_group.this.name
   location            = var.location
-  size                = "Standard_B1s"
+  size                = var.vm_size
   admin_username      = var.admin_username
 
   network_interface_ids = [
     azurerm_network_interface.vm.id
   ]
 
-  disable_password_authentication = true
+  disable_password_authentication = var.disable_password_authentication
   tags                            = local.common_tags
 
   admin_ssh_key {
@@ -31,14 +31,14 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    caching              = var.os_disk_caching
+    storage_account_type = var.os_disk_storage_account_type
   }
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts-gen2"
-    version   = "latest"
+    publisher = var.vm_image_publisher
+    offer     = var.vm_image_offer
+    sku       = var.vm_image_sku
+    version   = var.vm_image_version
   }
 }
