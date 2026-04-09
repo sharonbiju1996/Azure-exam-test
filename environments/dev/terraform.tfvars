@@ -11,6 +11,7 @@ subnets = {
     address_prefixes = ["10.10.2.0/24"]
   }
 }
+vm_size = "Standard_B1s"
 admin_username       = "azureuser"
 tags = {
   cost_center = "devops"
