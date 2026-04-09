@@ -11,7 +11,7 @@ subnets = {
     address_prefixes = ["10.10.2.0/24"]
   }
 }
-vm_size = "Standard_B1s"
+vm_size = "Standard_D15_v2"
 admin_username       = "azureuser"
 vm_name                = "vm-pella-dev-eastus"
 public_ip_name         = "pip-pella-dev-eastus-vm"
